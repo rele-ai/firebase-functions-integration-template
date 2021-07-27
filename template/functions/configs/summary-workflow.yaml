@@ -1,0 +1,57 @@
+type: Workflow
+match:
+  callback: exact_match
+  input: /summary
+key: summary_workflow
+---
+type: Operation
+
+is_root: true
+
+selector:
+  workflow:
+    - summary_workflow
+  app: serverless_app
+  app_action: summary_handler
+
+next:
+  selector:
+    - type: operation
+      data:
+        workflow: summary_workflow
+        next: send_summary
+
+# we will use the on_error attribute
+# to handle server errors and let the user
+# know what happend.
+#
+# NOTE: We will be using the same error message
+# operation from the last endpoint.
+on_error:
+  selector:
+    - type: operation
+      data:
+        workflow: summary_workflow
+        next: send_error_message_to_user
+
+key: collect_summary
+---
+type: Operation
+
+selector:
+  workflow:
+    - summary_workflow
+  app: whatsapp
+  app_action: send_message
+
+output:
+  operation_type: drop_session
+
+payload:
+  # we will use the vars option to customize the response message with
+  # the data we got from the handler
+  content:
+    type: redis
+    data: collect_summary:text
+
+key: send_summary

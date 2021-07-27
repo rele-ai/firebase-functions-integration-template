@@ -1,0 +1,92 @@
+type: Workflow
+match:
+  callback: exact_match
+  input: /create-task
+key: create_task_workflow
+---
+type: Operation
+
+selector:
+  workflow:
+    - create_task_workflow
+  app: whatsapp
+  app_action: send_message
+
+# the is_root attribute defines where the workflow should start
+is_root: true
+
+next:
+  selector:
+    - type: operation
+      data:
+        workflow: create_task_workflow
+        next: create_task
+
+payload:
+  content:
+    type: raw
+    data: "What would you like the task to say?"
+
+key: ask_the_user_for_task_content
+---
+type: Operation
+
+selector:
+  workflow:
+    - create_task_workflow
+  app: serverless_app
+  app_action: create_task_handler
+
+next:
+  selector:
+    - type: operation
+      data:
+        workflow: create_task_workflow
+        next: send_task_id_to_user
+
+# we will use the on_error attribute
+# to handle server errors and let the user
+# know what happend.
+on_error:
+  selector:
+    - type: operation
+      data:
+        workflow: create_task_workflow
+        next: send_error_message_to_user
+
+payload:
+  task:
+    # we will grab the user's response
+    # from the global redis state using the operation
+    # key as a prefix to the state data
+    type: redis
+    rkey_type: hash_map
+    data: ask_the_user_for_task_content:message_data:message:body
+
+key: create_task
+---
+type: Operation
+
+selector:
+  workflow:
+    - create_task_workflow
+  app: whatsapp
+  app_action: send_message
+
+output:
+  operation_type: drop_session
+
+payload:
+  # we will use the vars option to customize the response message with
+  # the data we got from the handler
+  content:
+    type: raw
+    data: "I've created that task for you. Your task ID is: $task_id"
+    vars:
+      # we will grab the task id from the global redis state
+      task_id:
+        type: redis
+        rkey_type: hash_map
+        data: create_task:id
+
+key: send_task_id_to_user
