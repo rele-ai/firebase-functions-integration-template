@@ -1,0 +1,44 @@
+# describe the config type
+type: App
+
+# point to the app's base url
+base_url: https://{{GOOGLE_FUNCTIONS_REGION}}-{{GOOGLE_PROJECT_ID}}.cloudfunctions.net
+
+# access protocol - gRPC or REST
+protocol: REST
+
+# app config identifier
+key: serverless_app
+---
+type: AppAction
+selector:
+  app: serverless_app
+request:
+  method: POST
+  uri: /createTaskHandler
+key: create_task_handler
+---
+type: AppAction
+selector:
+  app: serverless_app
+request:
+  method: GET
+  uri: /summaryHandler
+key: summary_handler
+---
+type: AppAction
+selector:
+  app: serverless_app
+request:
+  method: GET
+  uri: /getTaskHandler
+key: get_task_handler
+---
+type: AppAction
+selector:
+  app: serverless_app
+request:
+  method: DELETE
+  uri: /deleteTaskHandler
+key: delete_task_handler
+
