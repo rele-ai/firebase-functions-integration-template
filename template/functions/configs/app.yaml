@@ -15,7 +15,7 @@ selector:
   app: serverless_app
 request:
   method: POST
-  uri: /createTaskHandler
+uri: /createTaskHandler
 key: create_task_handler
 ---
 type: AppAction
@@ -23,7 +23,7 @@ selector:
   app: serverless_app
 request:
   method: GET
-  uri: /summaryHandler
+uri: /summaryHandler
 key: summary_handler
 ---
 type: AppAction
@@ -31,7 +31,7 @@ selector:
   app: serverless_app
 request:
   method: GET
-  uri: /getTaskHandler
+uri: /getTaskHandler
 key: get_task_handler
 ---
 type: AppAction
@@ -39,6 +39,6 @@ selector:
   app: serverless_app
 request:
   method: DELETE
-  uri: /deleteTaskHandler
+uri: /deleteTaskHandler
 key: delete_task_handler
 

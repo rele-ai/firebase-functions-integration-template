@@ -1,0 +1,20 @@
+type: Operation
+
+selector:
+  workflow:
+    - create_task_workflow
+    - summary_workflow
+    - get_task_workflow
+    - delete_task_workflow
+  app: whatsapp
+  app_action: send_message
+
+output:
+  operation_type: drop_session
+
+payload:
+  content:
+    type: raw
+    data: "Something went wrong :-("
+
+key: send_error_message_to_user

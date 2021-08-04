@@ -3,7 +3,7 @@ module.exports = {
     prompts: {
         GOOGLE_FUNCTIONS_REGION: {
             type: "string",
-            required: true,
+            default: "us-central1",
             label: "Google Functions Region"
         },
 		GOOGLE_PROJECT_ID: {
@@ -12,5 +12,5 @@ module.exports = {
 			label: "Google Project ID"
 		},
     },
-    completeMessage: "{{#inPlace}}To get started:\n\n  npm install\n  rb app:tokens | grep 'APP_' | sed 's/: /=/g' >> .env\n  npm run dev OR rb deploy:[user/org]{{else}}To get started:\n\n  cd {{destDirName}}\n  npm install\n  rb app:tokens | grep 'APP_' | sed 's/: /=/g' >> .env\n  npm run dev OR rb deploy:[user/org]{{/inPlace}}"
+    completeMessage: "{{#inPlace}}To get started:\n\n  cd ./functions\n  npm install\n  npm run deploy {{else}}To get started:\n\n  cd {{destDirName}}/functions\n  npm install\n  npm run deploy{{/inPlace}}"
 }
