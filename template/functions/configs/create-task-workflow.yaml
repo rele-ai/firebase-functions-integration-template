@@ -81,7 +81,7 @@ payload:
   # the data we got from the handler
   content:
     type: raw
-    data: "I've created that task for you. Your task ID is: $task_id"
+    data: "I've created that task for you. Your task ID is: .$task_id"
     vars:
       # we will grab the task id from the global redis state
       task_id:

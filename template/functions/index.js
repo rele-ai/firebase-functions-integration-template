@@ -58,12 +58,7 @@ exports.summaryHandler = functions
 
 		// format the provided response to our needs
 		res.json({
-			text: `
-			Here's a summary of your tasks:\n
-			• ${summaryData.usersCount} users created tasks in the system.\n
-			• ${summaryData.tasksCount} tasks are stored in the system.\n
-			• ${summaryData.completedTasks} are completed tasks.
-			`
+			text: `Here's a summary of your tasks:\n• ${summaryData.usersCount} users created tasks in the system.\n• ${summaryData.tasksCount} tasks are stored in the system.\n• ${summaryData.completedTasks} are completed tasks.`
 		})
 	})
 
@@ -76,10 +71,7 @@ exports.getTaskHandler = functions
 
 		// format the provided response to our needs
 		res.json({
-			text: `
-			*title:* ${response.data.title}\n
-			*completed:* ${response.data.completed ? 'Yes' : 'No'}
-			`
+			text: `*title:* ${response.data.title}\n*completed:* ${response.data.completed ? 'Yes' : 'No'}`
 		})
 	})
 
