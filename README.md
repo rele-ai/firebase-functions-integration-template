@@ -20,9 +20,8 @@ rb create serverless -t rele-ai/firebase-functions-integration-template#main
 it will ask you for a `Region` and a `Project ID`
 ```
 ? Google Functions Region `us-central1`
-? Google Project ID `[Project-ID]`
+? Google Project ID `Project-ID`
 ```
-Note: you can view your ProjectID by going to project settings -> general.
 
 ## Install Dependencies
 From the `serverless/functions` directory, install the local dependencies:
